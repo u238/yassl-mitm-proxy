@@ -1,0 +1,36 @@
+<html>
+
+<!--
+
+Filename: ssi_include.html
+Copyright (C) 2006-2012 Sawtooth Consulting Ltd.
+
+This file is part of the yaSSL Embedded Web Server Documentation 
+and Examples.
+
+-->
+
+<head>
+	<title>yaSSLEWS Example: SSI</title>
+</head>
+
+<body>
+
+<center>
+<img src="../yassl.png">
+<h2>yaSSL Embedded Web Server</h2>
+</center>
+
+<p><b>Example:</b> Using SSI to include the contents of an external source file (test.c). Please view the source file for this page in a text editor to see details about SSI usage.</p>
+<hr/>
+
+<p><b>[--- Begin SSI Block ---]</b></p>
+
+<pre>
+<!--#include file="./examples/test.c"-->
+</pre>
+
+<p><b>[--- End SSI Block ---]</b></p>
+
+</body>
+</html>

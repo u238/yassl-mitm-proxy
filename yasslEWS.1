@@ -1,0 +1,144 @@
+.TH "yaSSL Embedded Web Server" 1 "21 May 2012" "version 1.0"
+.SH NAME
+yaSSL Embedded Web Server - secure, lightweight embedded web server
+.SH SYNOPSIS
+.B yasslEWS
+[
+.I config_file
+] [
+.I OPTIONS
+] [-A 
+.I <htpasswd_file> <realm> <user> <passwd>
+]
+
+.SH DESCRIPTION
+The yaSSL Embedded Web Server is a fast, lightweight, and secure web server
+targeted at embedded devices. It provides support for SSI, CGI, aliases, MD5,
+IP restrictions, resumed downloads, and SSL/TLS. 
+.PP
+For SSL/TLS functionality, it uses the CyaSSL
+embedded SSL library which can be over 20 times smaller than OpenSSL. Default
+size with CyaSSL enabled is less than 100kB.
+.PP
+If no arguments are given, the web server will search for a file called
+yasslEWS.conf and read in any options listed there. yasslEWS.conf is 
+expected to be in the same directory as the yasslEWS binary. A different
+configuration file may be used if specified on the command line to the
+yasslEWS binary. The configuration file uses the same options as listed
+below, except that each option must be on a separate line and the leading
+dashes must be omitted. Lines beginning with "#" and blank lines are
+ignored.
+
+.SH OPTIONS
+.TP 8
+.BI "-A " "<htpasswd_file> <realm> <user> <passwd>"
+Add to or modify the user list in a given .htpasswd file.
+.TP 8
+.BI "-C " "cgi_pattern"
+All files which match the given GCI pattern are accepted as CGI (default: "**.cgi$|**.pl$|**.php$").
+.TP 8
+.BI "-E " "cgi_environment"
+Comma-separated list of custom CGI environment variables in the form of
+X=Y pairs (ex: VARIABLE=VALUE).
+.TP 8
+.BI "-G " "put_delete_passwords_file"
+PUT and DELETE passwords file. This must be specified if PUT or DELETE methods are used.
+.TP 8
+.BI "-I " "cgi_interpreter"
+CGI interpreter to use with all CGI scripts.
+.TP 8
+.BI "-M " "max_request_size"
+Maximum HTTP request size in bytes. Default: "16384"
+.TP 8
+.BI "-P " "protect_uri"
+Comma-separated list of URI=htpasswd mapping pairs. .htpasswd files may be
+modified or created using the "-A" option. The given URI will be protected
+using the associted htpasswd file.
+.TP 8
+.BI "-R " "authentication_domain"
+Authentication domain name (default: "mydomain.com").
+.TP 8
+.BI "-S " "ssi_pattern"
+All files matching these patterns will be treated as SSI. (default: "**.shtml$|**.shtm$").
+Currently two SSI directives are supported, "include" and "exec".
+.TP 8
+.BI "-a " "access_log_file"
+Access log file. By default, no logging is done.
+.TP 8
+.BI "-c " "ssl_chain_file"
+
+.TP 8
+.BI "-d " "enable_directory_listing"
+Turn on/off directory listing. Use "yes" or "no", (default: "yes").
+.TP 8
+.BI "-e " "error_log_file"
+Error log file. By default, no logging is done.
+.TP 8
+.BI "-g " "global_passwords_file"
+Global passwords file. If this is specified, individual directory htpasswd
+files will be ignored and all requests will be validated against the global
+password file.
+.TP 8
+.BI "-i " "index_files"
+A comma-separated list of default index files to use. Default: "index.html, index.htm, index.cgi".
+.TP 8
+.BI "-l " "access_control_list"
+Comma-separated list of IP subnets, where each subnet is prepended by either a
+"-" or a "+" meaning to disallow or allow, respectively. If the subnet mask is
+omitted, this means to allow/deny only an individual IP address.
+.TP 8
+.BI "-m " "extra_mime_types"
+Comma separated list of ext=mime_type pairs. Extensions must include a dot.
+Example: "yasslEWS -m .cpp=plain/test,.java=plain/text".
+.TP 8
+.BI "-p " "listening_ports"
+Comma-separated list of ports to listen on. If the port is SSL, a letter "s"
+must be appended to the port number (ex: -ports 8080,8081s). An IP Address may
+be bound to as well such as "-p 127.0.0.1:80".
+.TP 8 
+.BI "-r " "document_root"
+Location of the WWW root directory. If this option is not specified, the current working
+directory will be used as the web root. A comma separated list of URI_PREFIX=DIRECTORY
+pairs could be appended to it, allowing yasslEWS to serve from multiple directories.
+.TP 8
+.BI "-s " "ssl_certificate"
+Location of SSL certificate file.
+.TP 8
+.BI "-t " "num_threads"
+Number of worker threads to start (default: "10").
+.TP 8
+.BI "-u " "run_as_user"
+Run as the specified user.
+
+.SH NOTES
+After installing CyaSSL, to make sure the loader can find the libraries,
+set the path if /usr/local/lib is not already in your path:
+
+.B Linux:
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
+.B Mac:
+  export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/usr/local/lib
+
+.SH EXAMPLES
+Example of starting the yaSSL Embedded Web Server where 
+.B server.pem 
+contains the
+server's certificate and private key, http is served on port 
+.B 8080,
+https is served on the secure port 
+.B 8081, and the document root is "./":
+
+ ./yaSSLEWS -s server.pem -p 8080,8081s -r ./
+
+.SH COPYRIGHT
+The yaSSL Embedded Web Server is dual licensed under both the GPLv2 and standard
+commercial license. Commercial licenses are available from yaSSL.com.
+
+.SH AUTHOR
+The
+.B yaSSL Embedded Web Server
+is a product of yaSSL <http://www.yassl.com>. Support
+inquiries may be posted to the support forums
+<http://www.yassl.com/forums> or emailed to <support@yassl.com>.
+

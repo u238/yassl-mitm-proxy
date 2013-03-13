@@ -1,0 +1,63 @@
+yaSSL Embedded Web Server Release 1.0 (8/21/2012)
+
+This is the third release of the yaSSL Embedded Web Server (yasslEWS).
+
+Changes in Release 1.0 include:
+- Bug fixes
+- Updated CyaSSL support
+- iOS (Apple TV) build support
+- Better Windows build support
+- CGI and SSI extension pattern matching
+- Addition of /examples directory
+
+The manuals for CyaSSL and yasslEWS are available at:
+http://www.yassl.com/documentation/CyaSSL-Manual.pdf
+http://www.yassl.com/documentation/yasslEWS-Manual.pdf
+
+For build instructions please see below.
+
+
+
+************* yaSSL Embedded Web Server Release 0.2 (2/4/2011)
+
+This is the second release of the yaSSL Embedded Web Server (yasslEWS).
+
+To build, type make and look for your platform, then type make again followed
+by your platform, e.g.
+
+$make
+make (linux|bsd|solaris|mac|windows|mingw)
+$make mac
+
+In order to use SSL you will need to have the CyaSSL libraries available at
+run-time.
+SSL isn't required, the Web Server can be used without a secure port.
+
+To build CyaSSL:
+1) Download CyaSSL from http://yassl.com/yaSSL/Download.html
+2) Unpack it,
+    unzip -a cyassl-version.zip
+3) configure it to use shared libraries and OpenSSL extra layer
+    ./configure --disable-static --enable-opensslExtra
+4) make it
+    make
+5) Install it
+    sudo make install
+
+The CyaSSL libraries will now be available in /usr/local/cyassl/lib .
+
+To make sure the loader can find them you'll need to set the path.
+
+Linux:
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cyassl/lib
+
+Mac:
+export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/usr/local/cyassl/lib
+
+Then, to start the web server with both insecure and secure ports issue:
+
+./yasslEWS -s server.pem -p 8080,8081s -e error.txt
+
+Any errors will be available in error.txt.
+
+Please see the manual in the doc/ directory for more information.
